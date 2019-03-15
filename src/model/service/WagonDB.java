@@ -1,6 +1,7 @@
 package model.service;
 
 import model.entity.Carriage;
+
 import static model.entity.RailwayVehicle.TrackSize.*;
 import static model.entity.CarriageType.*;
 public enum CarriagesDB {
