@@ -2,11 +2,10 @@ package model.service;
 
 import model.entity.*;
 import static model.entity.RailwayVehicle.TrackSize.*;
+import static model.entity.RailwayVehicle.Function.*;
 import static model.service.VehicleDB.*;
-import static model.service.LocomotiveDB.*;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -14,19 +13,35 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
     private T t;
     private W w;
 
-        public Train constructTrain() {
+        public Wagon[] getTrainBuildingScheme(VehicleDB type){
+            return type.getTrainScheme();
+        }
 
-        Set<RailwayVehicle> trainParts = new HashSet<>(trainConstructionScheme);
-        RailwayVehicle[] trainUnderConstruction = new RailwayVehicle[trainConstructionScheme.size()];
+        private List<Wagon> possibleToConstructTrain(VehicleDB trainConstructionScheme) {
+            Set<Wagon> trainParts = new HashSet<>(Arrays.asList(trainConstructionScheme.getTrainScheme()));
+            List <Wagon> parts = new ArrayList(trainParts.size());
 
-        Arrays.asList(DBVehicleTypes.values()).forEach(vehicleType->{
-            if(trainParts.contains(vehicleType.getRailwayVehicle())){
-                trainUnderConstruction[trainConstructionScheme.
-                        indexOf(vehicleType.getRailwayVehicle())] = vehicleType.getRailwayVehicle();
+            Arrays.asList(VehicleDB.values()).forEach(vehicleType->{
+                if(trainParts.contains(vehicleType.getWagon())){
+                    parts.set(trainConstructionScheme.indexOf(vehicleType.getWagon()),vehicleType.getWagon()) ;
+                }
+            });
+            return parts;
+        }
+
+    public Train constructTrain(VehicleDB trainConstructionScheme){
+        List <Wagon> list = possibleToConstructTrain(trainConstructionScheme);
+        if(list.size() == trainConstructionScheme.size()){
+            try{
+                return new Train<Carriage>(EURO_TRACK, Passenger,(Locomotive) list.get(0),
+                        list.subList(1,trainConstructionScheme.size()));
+            }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
+                e.printStackTrace();
             }
-        });
-        return new Train(trainUnderConstruction[0].getTrackSize(),trainUnderConstruction[0].getFunction(),
-                Arrays.asList(trainUnderConstruction));
+
+        }
+        return null;
+        //throw new NotEnoughDetailsInDB Exception;
 
     }
     public Train buildPassengerTrain(){
