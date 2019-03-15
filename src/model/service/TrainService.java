@@ -1,12 +1,9 @@
 package model.service;
 
 import model.entity.*;
-
-import static model.entity.RailwayVehicle.Function.Passenger;
-import static model.entity.RailwayVehicle.TrackSize.EASTERN_TRACK;
-import static model.entity.RailwayVehicle.TrackSize.EURO_TRACK;
+import static model.entity.RailwayVehicle.TrackSize.*;
 import static model.service.WagonDB.*;
-
+import static model.service.LocomotiveDB.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
         TrainBuilder trainBuilder = new PassengerTrainBuilder();
         return trainBuilder
                 .buildTrackSize(EASTERN_TRACK)
-                .buildLocomotive((Locomotive)DBVehicleTypes.PASSENGER_LOCOMOTIVE.get())
+                .buildLocomotive(PASSENGER_LOCOMOTIVE.get())
                 .buildWagons(Arrays.asList(CARRIAGE_COMPARTMENT.get(),CARRIAGE_SEATING1.get()))
                 .getBuiltTrain();
     }

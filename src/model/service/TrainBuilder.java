@@ -3,16 +3,16 @@ package model.service;
 import model.entity.*;
 import java.util.List;
 import static model.entity.RailwayVehicle.TrackSize.*;
-import static model.entity.RailwayVehicle.Function.*;
 
-public abstract class TrainBuilder {
+abstract class TrainBuilder{
     private RailwayVehicle.TrackSize trackSize = EURO_TRACK;
+
     private Train train;
     void makeTrain(RailwayVehicle.Function function){
         this.train = new Train(trackSize, function);
     }
 
-    public TrainBuilder buildTrackSize(RailwayVehicle.TrackSize trackSize){
+     public TrainBuilder buildTrackSize(RailwayVehicle.TrackSize trackSize){
         train.setTrackSize(trackSize);
         return this;
     }

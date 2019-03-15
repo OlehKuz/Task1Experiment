@@ -1,5 +1,7 @@
 package model.entity;
+import model.service.NotSameTrainFunctionException;
 import model.service.TrainService;
+import model.service.WrongTrackSizeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Train<W extends Wagon> extends RailwayVehicle{
 
     public Train (TrackSize trackSize, Function function,
     Locomotive locomotive, List<W> wagons)throws NotSameTrainFunctionException,
-            WrongTrackSizeException{
+            WrongTrackSizeException {
         super(function, trackSize);
         this.setLocomotive(locomotive);
         this.setWagons(wagons);

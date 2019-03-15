@@ -1,4 +1,4 @@
-package model.entity;
+package model.service;
 
 public class WrongTrackSizeException extends Exception{
     public WrongTrackSizeException(String message){
