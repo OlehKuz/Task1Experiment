@@ -27,7 +27,7 @@ public class Train<W extends Wagon> extends RailwayVehicle{
             NotSameTrainFunctionException, WrongTrackSizeException{
         TrainService<Train, W> trainService = new TrainService<Train,W>();
         trainService.checkListCompitability(this, wagons);
-            this.wagons = wagons;
+        this.wagons = wagons;
     }
 
     public List<W> getWagons() {
@@ -43,6 +43,7 @@ public class Train<W extends Wagon> extends RailwayVehicle{
             NotSameTrainFunctionException, WrongTrackSizeException{
         TrainService<Train, Locomotive> trainService = new TrainService<Train,Locomotive>();
         trainService.checkCompatibility(this, locomotive);
+        this.locomotive = locomotive;
     }
 
     @Override

@@ -11,8 +11,8 @@ public class View {
     public static final ResourceBundle bundle =
             ResourceBundle.getBundle(
                     "messages",
-                    //new Locale("ua", "UA"));  // Ukrainian
-                    new Locale("en"));        // English
+                    new Locale("ua", "UA"));  // Ukrainian
+                   // new Locale("en"));        // English
 
     public void printMessage(String message){
         System.out.println(message);

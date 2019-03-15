@@ -38,7 +38,7 @@ public class Controller {
         view.printMessage(bundle.getString(FILTER_WAGONS_PASSENGERS) +train);
     }
 
-    public Optional<Train> constructTrain(TrainService trainService){
+    private Optional<Train> constructTrain(TrainService trainService){
         try{
             return Optional.of(trainService.constructTrain(VehicleDB.PASSENGER_TRAIN));
         }catch (NotEnoughDetailsException e){
