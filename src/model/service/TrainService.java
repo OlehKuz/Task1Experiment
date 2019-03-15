@@ -3,7 +3,6 @@ package model.service;
 import model.entity.*;
 import static model.entity.RailwayVehicle.TrackSize.*;
 import static model.entity.RailwayVehicle.Function.*;
-import static model.service.VehicleDB.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,11 +18,8 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
 
         private boolean possibleToConstructTrain(List <Wagon> trainConstructionScheme) {
             Set<Wagon> trainParts = new HashSet<>(trainConstructionScheme);
-            //List <Wagon> parts = new ArrayList(trainConstructionScheme.size());
-
             Arrays.asList(VehicleDB.values()).forEach(vehicleType->{
                 if(trainParts.contains(vehicleType.getWagon())){
-                    //parts.set(trainConstructionScheme.indexOf(vehicleType.getWagon()),vehicleType.getWagon()) ;
                     trainParts.remove(vehicleType.getWagon());
                 }
             });

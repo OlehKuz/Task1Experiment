@@ -14,6 +14,10 @@ public class FreightWagon extends Wagon {
         return freightType;
     }
 
+    public FreightType getFreightType() {
+        return freightType;
+    }
+
     public int getVolumeCapacity() {
         return volumeCapacity;
     }
