@@ -6,10 +6,10 @@ import static model.entity.RailwayVehicle.TrackSize.*;
 import static model.entity.RailwayVehicle.Function.*;
 
 public abstract class TrainBuilder {
-    private RailwayVehicle.TrackSize trackSize = EASTERN_TRACK;
-    Train train;
-    public void makeTrain(RailwayVehicle.Function function){
-        train = new Train(trackSize, function);
+    private RailwayVehicle.TrackSize trackSize = EURO_TRACK;
+    private Train train;
+    void makeTrain(RailwayVehicle.Function function){
+        this.train = new Train(trackSize, function);
     }
 
     public TrainBuilder buildTrackSize(RailwayVehicle.TrackSize trackSize){

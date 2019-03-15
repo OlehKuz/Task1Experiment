@@ -6,6 +6,6 @@ import model.entity.RailwayVehicle;
 public class FreightTrainBuilder extends TrainBuilder{
     public FreightTrainBuilder (){
         super();
-        makeTrain(RailwayVehicle.Function.Passenger);
+        makeTrain(RailwayVehicle.Function.Freight);
     }
 }
