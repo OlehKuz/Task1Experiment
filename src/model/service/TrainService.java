@@ -17,40 +17,30 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
             return type.getTrainScheme();
         }
 
-        private List<Wagon> possibleToConstructTrain(VehicleDB trainConstructionScheme) {
-            Set<Wagon> trainParts = new HashSet<>(Arrays.asList(trainConstructionScheme.getTrainScheme()));
-            List <Wagon> parts = new ArrayList(trainParts.size());
+        private boolean possibleToConstructTrain(List <Wagon> trainConstructionScheme) {
+            Set<Wagon> trainParts = new HashSet<>(trainConstructionScheme);
+            //List <Wagon> parts = new ArrayList(trainConstructionScheme.size());
 
             Arrays.asList(VehicleDB.values()).forEach(vehicleType->{
                 if(trainParts.contains(vehicleType.getWagon())){
-                    parts.set(trainConstructionScheme.indexOf(vehicleType.getWagon()),vehicleType.getWagon()) ;
+                    //parts.set(trainConstructionScheme.indexOf(vehicleType.getWagon()),vehicleType.getWagon()) ;
+                    trainParts.remove(vehicleType.getWagon());
                 }
             });
-            return parts;
+            return trainParts.isEmpty();
         }
 
-    public Train constructTrain(VehicleDB trainConstructionScheme){
-        List <Wagon> list = possibleToConstructTrain(trainConstructionScheme);
-        if(list.size() == trainConstructionScheme.size()){
+    public Train constructTrain(VehicleDB trainConstructionScheme) throws NotEnoughDetailsException{
+            List <Wagon> list = new ArrayList<>(Arrays.asList(trainConstructionScheme.getTrainScheme()));
+        if(possibleToConstructTrain(list)){
             try{
-                return new Train<Carriage>(EURO_TRACK, Passenger,(Locomotive) list.get(0),
-                        list.subList(1,trainConstructionScheme.size()));
+                return new Train<>(EURO_TRACK, Passenger,new Locomotive(Passenger,EURO_TRACK, Locomotive.Engine.Diesel, 20000, 170 ), list);
             }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
                 e.printStackTrace();
             }
-
         }
-        return null;
-        //throw new NotEnoughDetailsInDB Exception;
+        throw new NotEnoughDetailsException("We dont have necessary vehicles to build this train " + trainConstructionScheme.name());
 
-    }
-    public Train buildPassengerTrain(){
-        TrainBuilder trainBuilder = new PassengerTrainBuilder();
-        return trainBuilder
-                .buildTrackSize(EASTERN_TRACK)
-                .buildLocomotive(PASSENGER_LOCOMOTIVE.get())
-                .buildWagons(Arrays.asList(CARRIAGE_COMPARTMENT.get(),CARRIAGE_SEATING1.get()))
-                .getBuiltTrain();
     }
 
     public int getNumberPassengers(Train<Carriage> carriageTrain){
@@ -92,19 +82,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
         }
     }
 
-    public void checkCompatibility(RailwayVehicle vehicle1, RailwayVehicle vehicle2) throws
-            NotSameTrainFunctionException, WrongTrackSizeException {
-        if(!isCompatibleFunction(vehicle1,vehicle2)){
-            throw new NotSameTrainFunctionException(vehicle1.getClass() + " function "+
-                    vehicle1.getFunction()+" differ from this vehicle : " +
-                    vehicle2.getClass()+ " " + vehicle2.getFunction());
-        }
-        if(!isCompatibleTrack(vehicle1,vehicle2)){
-            throw new WrongTrackSizeException(vehicle1.getClass() + " track dimensions "+
-                    vehicle1.getTrackSize()+" differ from this vehicle : " +
-                    vehicle2.getClass()+ " track dimensions "+ vehicle2.getTrackSize());
-        }
-    }
+
 
     private boolean isCompatibleTrack(RailwayVehicle vehicle1,RailwayVehicle vehicle2) {
         return vehicle1.getTrackSize() == vehicle2.getTrackSize();
@@ -118,6 +96,21 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
             NotSameTrainFunctionException, WrongTrackSizeException{
         for(W vehicle:listVehicles) {
             checkCompatibility(vehicle1, vehicle);
+        }
+
+    }
+
+    public void checkCompatibility(RailwayVehicle vehicle1, RailwayVehicle vehicle2) throws
+            NotSameTrainFunctionException, WrongTrackSizeException {
+        if(!isCompatibleFunction(vehicle1,vehicle2)){
+            throw new NotSameTrainFunctionException(vehicle1.getClass() + " function "+
+                    vehicle1.getFunction()+" differ from this vehicle : " +
+                    vehicle2.getClass()+ " " + vehicle2.getFunction());
+        }
+        if(!isCompatibleTrack(vehicle1,vehicle2)){
+            throw new WrongTrackSizeException(vehicle1.getClass() + " track dimensions "+
+                    vehicle1.getTrackSize()+" differ from this vehicle : " +
+                    vehicle2.getClass()+ " track dimensions "+ vehicle2.getTrackSize());
         }
     }
 
