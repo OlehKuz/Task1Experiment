@@ -4,9 +4,6 @@ import model.entity.*;
 import model.service.NotEnoughDetailsException;
 import model.service.TrainService;
 import model.service.VehicleDB;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -15,13 +12,13 @@ public class Controller {
         TrainService trainService = new TrainService();
         Optional<Train> train = constructTrain(trainService);
         System.out.println(train);
-        int lug = trainService.getNumberLuggage(train);
-        int pas = trainService.getNumberPassengers(train);
+        int lug = trainService.getNumberLuggage(train.get());
+        int pas = trainService.getNumberPassengers(train.get());
         System.out.println("Lug " + lug + " Pas " + pas);
 
-        trainService.filterByNumberPassengers(train, 50);
+        trainService.filterByNumberPassengers(train.get(), 50);
         System.out.println(train);
-        trainService.sortWagonsByComfort(train);
+        trainService.sortWagonsByComfort(train.get());
         System.out.println(train);
 
 
