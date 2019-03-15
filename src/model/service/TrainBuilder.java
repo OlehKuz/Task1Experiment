@@ -2,15 +2,17 @@ package model.service;
 
 import model.entity.*;
 import java.util.List;
+import static model.entity.RailwayVehicle.TrackSize.*;
+import static model.entity.RailwayVehicle.Function.*;
 
 public abstract class TrainBuilder {
-    private TrackSize trackSize = TrackSize.EASTERN_TRACK;
+    private RailwayVehicle.TrackSize trackSize = EASTERN_TRACK;
     Train train;
     public void makeTrain(RailwayVehicle.Function function){
         train = new Train(trackSize, function);
     }
 
-    public TrainBuilder buildTrackSize(TrackSize trackSize){
+    public TrainBuilder buildTrackSize(RailwayVehicle.TrackSize trackSize){
         train.setTrackSize(trackSize);
         return this;
     }
@@ -20,14 +22,6 @@ public abstract class TrainBuilder {
             train.setWagons(wagons);
         }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
            e.printStackTrace();
-        }
-        return this;
-    }
-    public TrainBuilder buildWagons(Wagon wagon){
-        try{
-            train.addWagon(wagon);
-        }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
-            e.printStackTrace();
         }
         return this;
     }

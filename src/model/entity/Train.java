@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Train<W extends Wagon> extends RailwayVehicle{
+public class Train<W extends Wagon> extends RailwayVehicle{
     private List<W> wagons = new ArrayList<>();
     private Locomotive locomotive;
 
+    public Train (TrackSize trackSize, Function function){
+        super(function, trackSize);
+    }
 
     public Train (TrackSize trackSize, Function function,
     Locomotive locomotive, List<W> wagons)throws NotSameTrainFunctionException,

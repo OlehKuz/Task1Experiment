@@ -16,16 +16,13 @@ public enum DBVehicleTypes {
     CARRIAGE_COMPARTMENT(new Carriage(EURO_TRACK, Compartment)),
     CARRIAGE_LUX(new Carriage(EURO_TRACK, DeLuxe));
 
-    PASSENGER_SLEEPING_TRAIN(new PassengerTrain(Passenger,EURO_TRACK,PASSENGER_LOCOMOTIVE,CARRIAGE_LUX, CARRIAGE_COMPARTMENT,CARRIAGE_BERTH)),
-    //PASSENGER_TRAIN(PASSENGER_LOCOMOTIVE),
-    PASSENGER_FAST_TRAIN(PASSENGER_LOCOMOTIVE.getRailwayVehicle(), CARRIAGE_SEATING1.getRailwayVehicle(),CARRIAGE_SEATING2.getRailwayVehicle()),
-    FREIGHT_TRAIN(PASSENGER_LOCOMOTIVE.getRailwayVehicle(),FREIGHT_WAGON.getRailwayVehicle());
+    private RailwayVehicle railwayVehicle;
 
-    private RailwayVehicle[] railwayVehicle;
-    DBVehicleTypes(RailwayVehicle...vehicles){
+    DBVehicleTypes(RailwayVehicle railwayVehicle) {
         this.railwayVehicle = railwayVehicle;
     }
-    public RailwayVehicle getRailwayVehicle() {
+
+    public RailwayVehicle get() {
         return railwayVehicle;
     }
 }

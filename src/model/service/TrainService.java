@@ -2,12 +2,29 @@ package model.service;
 
 import model.entity.*;
 
+import static model.entity.RailwayVehicle.Function.Passenger;
+import static model.entity.RailwayVehicle.TrackSize.EURO_TRACK;
+import static model.service.CarriagesDB.*;
+
+import java.util.Arrays;
 import java.util.List;
 
 
 public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
     private T t;
     private W w;
+
+    public Train buildPassengerTrain()throws
+            NotSameTrainFunctionException, WrongTrackSizeException{
+        Train train;
+        try{
+            train = new Train<Carriage>(RailwayVehicle.TrackSize.EURO_TRACK, RailwayVehicle.Function.Passenger,
+                    new Locomotive(Passenger,EURO_TRACK, Locomotive.Engine.Diesel,20000, 150), Arrays.asList(CARRIAGE_SEATING1.get(),CARRIAGE_BERTH.get()));
+        }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
+            e.printStackTrace();
+        }
+        return train;
+    }
 
     public void checkCompatibility(RailwayVehicle vehicle1, RailwayVehicle vehicle2) throws
             NotSameTrainFunctionException, WrongTrackSizeException {
