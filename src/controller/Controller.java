@@ -9,7 +9,6 @@ import static view.TextConstant.*;
 import static view.View.bundle;
 
 import view.View;
-import view.View.*;
 
 
 public class Controller {
@@ -20,22 +19,23 @@ public class Controller {
     public void run (){
         TrainService trainService = new TrainService();
         Optional<Train> train = constructTrain(trainService);
-        view.pri
-        int lug = trainService.getNumberLuggage(train.get());
-        int pas = trainService.getNumberPassengers(train.get());
-        System.out.println("Lug " + lug + " Pas " + pas);
-        filterByPassengers(trainService,train.get());
-        trainService.filterByNumberPassengers(train.get(), 50);
-        System.out.println(train);
-        trainService.sortWagonsByComfort(train.get());
-        System.out.println(train);
+        view.printMessage(bundle.getString(LETS_CONSTRUCT) + train);
+        view.printMessage(bundle.getString(NUMBER_PASSENGERS) + trainService.getNumberPassengers(train.get())+
+                bundle.getString(NUMBER_LUGGAGE) + trainService.getNumberLuggage(train.get()));
+        sortByComfort(trainService, train.get());
+        filterByPassengers(trainService, train.get());
 
+    }
+
+    private void sortByComfort(TrainService trainService, Train train){
+        trainService.sortWagonsByComfort(train);
+        view.printMessage(bundle.getString(FILTER_WAGONS_COMFORT) + train);
 
     }
 
     private void filterByPassengers(TrainService trainService, Train train){
         trainService.filterByNumberPassengers(train, 50);
-        System.out.println(train);
+        view.printMessage(bundle.getString(FILTER_WAGONS_PASSENGERS) +train);
     }
 
     public Optional<Train> constructTrain(TrainService trainService){
