@@ -16,7 +16,7 @@ public class Carriage extends Wagon{
     @Override
     public String toString() {
         return "\n Carriage{" +
-                ", carriageType=" + carriageType +
+                 carriageType +
                 '}';
     }
 }

@@ -24,7 +24,7 @@ public class FreightWagon extends Wagon {
 
     @Override
     public String toString() {
-        return "FreightWagon{" +
+        return "\n FreightWagon{" +
                 "freight type = '" + freightType +
                 "', volume capacity m3 = '" + getVolumeCapacity()+
                 "', "+ super.toString() + "}";

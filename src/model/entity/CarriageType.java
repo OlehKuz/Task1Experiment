@@ -32,7 +32,7 @@ public enum CarriageType {
     @Override
     public String toString() {
         return "CarriageType{" +
-                ", carriageName='" + carriageName + '\'' +
+                "carriageName='" + carriageName + '\'' +
                 ", passengerCapacity=" + passengerCapacity +
                 ", luggageCapacity=" + luggageCapacity +
                 '}';

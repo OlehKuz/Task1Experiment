@@ -39,7 +39,7 @@ public class Locomotive extends RailwayVehicle{
 
     @Override
     public String toString() {
-        return "Locomotive{" +
+        return "\nLocomotive{" +
                 "engine = '" + engine +
                 "', pull power = '" + pullPower +
                 "', max speed = '" + maxSpeed +

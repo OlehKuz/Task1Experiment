@@ -11,9 +11,9 @@ public class Train<W extends Wagon> extends RailwayVehicle{
     private List<W> wagons = new ArrayList<>();
     private Locomotive locomotive;
 
-    public Train (TrackSize trackSize, Function function){
+    /*public Train (TrackSize trackSize, Function function){
         super(function, trackSize);
-    }
+    }*/
 
     public Train (TrackSize trackSize, Function function,
     Locomotive locomotive, List<W> wagons)throws NotSameTrainFunctionException,
@@ -48,8 +48,8 @@ public class Train<W extends Wagon> extends RailwayVehicle{
     @Override
     public String toString() {
         return "Train{" +
-                "wagons=" + wagons +
-                ", locomotive=" + locomotive +
+                "\n wagons=" + wagons +
+                ",\n locomotive=" + locomotive +
                 '}';
     }
 }
