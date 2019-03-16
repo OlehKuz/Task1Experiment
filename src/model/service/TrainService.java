@@ -39,10 +39,12 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
     }
 
     public int getNumberPassengers(Train<Carriage> carriageTrain){
-        return  carriageTrain.getWagons()
-                .stream()
-                .mapToInt(carriage ->(carriage.getType().getPassengerCapacity()))
-                .sum();
+                return carriageTrain
+                        .getWagons()
+                        .stream()
+                        .map(Carriage::getType)
+                        .mapToInt(CarriageType::getPassengerCapacity)
+                        .sum();
 
     }
 
@@ -68,7 +70,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
     public void sortWagonsByComfort(Train<Carriage> carriageTrain){
         List<Carriage> comfort = carriageTrain.getWagons()
                 .stream()
-                .sorted(Comparator.comparing(carriage -> carriage.getType()))
+                .sorted(Comparator.comparing(Carriage::getType))
                 .collect(Collectors.toList());
         try{
             carriageTrain.setWagons(comfort);
