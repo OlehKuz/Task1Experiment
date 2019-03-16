@@ -18,11 +18,10 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
 
         private boolean possibleToConstructTrain(List <Wagon> trainConstructionScheme) {
             Set<Wagon> trainParts = new HashSet<>(trainConstructionScheme);
-            Arrays.asList(VehicleDB.values()).forEach(vehicleType->{
-                if(trainParts.contains(vehicleType.getWagon())){
-                    trainParts.remove(vehicleType.getWagon());
-                }
-            });
+            Arrays.asList(VehicleDB.values())
+                    .forEach(vehicleType->{
+                        trainParts.remove(vehicleType.getWagon());
+                    });
             return trainParts.isEmpty();
         }
 
