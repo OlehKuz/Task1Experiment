@@ -12,9 +12,9 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
     private T t;
     private W w;
 
-        public Wagon[] getTrainBuildingScheme(VehicleDB type){
+        /*public Wagon[] getTrainBuildingScheme(VehicleDB type){
             return type.getTrainScheme();
-        }
+        }*/
 
         private boolean possibleToConstructTrain(List <Wagon> trainConstructionScheme) {
             Set<Wagon> trainParts = new HashSet<>(trainConstructionScheme);
@@ -85,6 +85,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
         for(W vehicle:listVehicles) {
             checkCompatibility(vehicle1, vehicle);
         }
+
 
     }
 

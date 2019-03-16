@@ -19,11 +19,13 @@ public class Controller {
     public void run (){
         TrainService trainService = new TrainService();
         Optional<Train> train = constructTrain(trainService);
-        view.printMessage(bundle.getString(LETS_CONSTRUCT) + train);
-        view.printMessage(bundle.getString(NUMBER_PASSENGERS) + trainService.getNumberPassengers(train.get())+
-                bundle.getString(NUMBER_LUGGAGE) + trainService.getNumberLuggage(train.get()));;
-        sortByComfort(trainService, train.get());
-        filterByPassengers(trainService, train.get());
+        train.ifPresent(train1->view.printMessage(bundle.getString(LETS_CONSTRUCT) + train1));
+
+        train.ifPresent(train1 -> view.printMessage(bundle.getString(NUMBER_PASSENGERS) + trainService.getNumberPassengers(train1) +
+                bundle.getString(NUMBER_LUGGAGE) + trainService.getNumberLuggage(train1)));
+
+        train.ifPresent(train1->sortByComfort(trainService, train1));
+        train.ifPresent(train1->filterByPassengers(trainService, train1));
 
     }
 
@@ -40,7 +42,7 @@ public class Controller {
 
     private Optional<Train> constructTrain(TrainService trainService){
         try{
-            return Optional.ofNullable(trainService.constructTrain(VehicleDB.PASSENGER_TRAIN));
+            return trainService.constructTrain(VehicleDB.PASSENGER_TRAIN);
         }catch(NotEnoughDetailsException e){
             e.printStackTrace();
         }
