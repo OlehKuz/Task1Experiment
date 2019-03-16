@@ -50,14 +50,15 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
     public int getNumberLuggage(Train<Carriage> carriageTrain){
         return carriageTrain.getWagons()
                 .stream()
-                .mapToInt(carriage ->(carriage.getType().getLuggageCapacity()))
+                .map(Carriage::getType)
+                .mapToInt(CarriageType::getLuggageCapacity)
                 .sum();
     }
 
     public void filterByNumberPassengers(Train<Carriage> carriageTrain, int number){
         List<Carriage> filtered = carriageTrain.getWagons()
                 .stream()
-                .filter(carriage -> (carriage.getType().getPassengerCapacity()>=number))
+                .filter(carriage -> carriage.getType().getPassengerCapacity()>=number)
                 .collect(Collectors.toList());
             carriageTrain.setWagons(filtered);
     }

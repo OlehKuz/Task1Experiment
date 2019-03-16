@@ -19,13 +19,12 @@ public class Controller {
     public void run (){
         TrainService trainService = new TrainService();
         Optional<Train> train = constructTrain(trainService);
-        train.ifPresent(train1->view.printMessage(bundle.getString(LETS_CONSTRUCT) + train1));
-
-        train.ifPresent(train1 -> view.printMessage(bundle.getString(NUMBER_PASSENGERS) + trainService.getNumberPassengers(train1) +
+        train.ifPresent(train1->   view.printMessage(bundle.getString(LETS_CONSTRUCT) + train1));
+        train.ifPresent(train1 ->  view.printMessage(bundle.getString(NUMBER_PASSENGERS) + trainService.getNumberPassengers(train1) +
                 bundle.getString(NUMBER_LUGGAGE) + trainService.getNumberLuggage(train1)));
+        train.ifPresent(train1 ->sortByComfort(trainService,train1));
+        train.ifPresent(train1 ->filterByPassengers(trainService,train1));
 
-        train.ifPresent(train1->sortByComfort(trainService, train1));
-        train.ifPresent(train1->filterByPassengers(trainService, train1));
 
     }
 
