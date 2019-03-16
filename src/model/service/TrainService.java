@@ -83,9 +83,10 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
 
     public void checkListCompitability(T vehicle1, List<W> listVehicles) throws
             NotSameTrainFunctionException, WrongTrackSizeException{
-        for(W vehicle:listVehicles) {
+        for(W vehicle:listVehicles) { /*чого тут не потр1бно try catch, а в лямбд1 потр1бно*/
             checkCompatibility(vehicle1, vehicle);
         }
+        //listVehicles.forEach(vehicle->checkCompatibility(vehicle1,vehicle));
 
 
     }
