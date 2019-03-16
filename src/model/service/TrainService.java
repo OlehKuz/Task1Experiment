@@ -45,7 +45,6 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
                         .map(Carriage::getType)
                         .mapToInt(CarriageType::getPassengerCapacity)
                         .sum();
-
     }
 
     public int getNumberLuggage(Train<Carriage> carriageTrain){
@@ -60,11 +59,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
                 .stream()
                 .filter(carriage -> (carriage.getType().getPassengerCapacity()>=number))
                 .collect(Collectors.toList());
-        try{
             carriageTrain.setWagons(filtered);
-        }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
-            e.printStackTrace();
-        }
     }
 
     public void sortWagonsByComfort(Train<Carriage> carriageTrain){
@@ -72,11 +67,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
                 .stream()
                 .sorted(Comparator.comparing(Carriage::getType))
                 .collect(Collectors.toList());
-        try{
             carriageTrain.setWagons(comfort);
-        }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
-            e.printStackTrace();
-        }
     }
 
 
@@ -97,7 +88,7 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
 
     }
 
-    public void checkCompatibility(RailwayVehicle vehicle1, RailwayVehicle vehicle2) throws
+    public void checkCompatibility(T vehicle1, W vehicle2) throws
             NotSameTrainFunctionException, WrongTrackSizeException {
         if(!isCompatibleFunction(vehicle1,vehicle2)){
             throw new NotSameTrainFunctionException(vehicle1.getClass() + " function "+
