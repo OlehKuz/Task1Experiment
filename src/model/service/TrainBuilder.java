@@ -12,6 +12,7 @@ import java.util.Objects;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 public abstract class TrainBuilder {
@@ -50,8 +51,9 @@ public abstract class TrainBuilder {
         return this;
     }
 
-    public Train getBuiltTrain(){
-        return train;
+    public Optional<Train> getBuiltTrain(){
+        if(train.getWagons() == null || train.getLocomotive() == null){return Optional.empty();}
+        return Optional.of(train);
     }
 
 }

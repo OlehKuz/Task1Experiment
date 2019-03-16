@@ -3,7 +3,7 @@ package model.service;
 import model.entity.*;
 import static model.entity.RailwayVehicle.TrackSize.*;
 import static model.entity.RailwayVehicle.Function.*;
-
+import static model.service.LocomotiveDB.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,14 +25,14 @@ public class TrainService <T extends RailwayVehicle, W extends RailwayVehicle>{
             return trainParts.isEmpty();
         }
 
-    public Train constructTrain(VehicleDB trainConstructionScheme) throws NotEnoughDetailsException{
+    public Optional<Train> constructTrain(VehicleDB trainConstructionScheme) throws NotEnoughDetailsException{
             List <Wagon> list = new ArrayList<>(Arrays.asList(trainConstructionScheme.getTrainScheme()));
         if(possibleToConstructTrain(list)){
-            try{
-                return new Train<>(EURO_TRACK, Passenger,new Locomotive(Passenger,EURO_TRACK, Locomotive.Engine.Diesel, 20000, 170 ), list);
-            }catch (NotSameTrainFunctionException | WrongTrackSizeException e){
-                e.printStackTrace();
-            }
+            TrainBuilder trainBuilder = new PassengerTrainBuilder();
+            return trainBuilder
+                    .buildWagons(list)
+                    .buildLocomotive(PASSENGER_LOCOMOTIVE.getLocomotive())
+                    .getBuiltTrain();
         }
         throw new NotEnoughDetailsException("We dont have necessary vehicles to build this train " + trainConstructionScheme.name());
 

@@ -39,6 +39,11 @@ public class Controller {
     }
 
     private Optional<Train> constructTrain(TrainService trainService){
+        try{
             return Optional.ofNullable(trainService.constructTrain(VehicleDB.PASSENGER_TRAIN));
+        }catch(NotEnoughDetailsException e){
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }
